@@ -4,7 +4,8 @@
 function comparador() {
     return Math.random() - 0.5;
 }*/
-
+let isTurned = null;
+let matchedCards = [];
 let cards = null;
 const cardImages = [
     "assets/squirtle.gif",
@@ -53,36 +54,87 @@ function startGame() {
     //é colocado as cartas
     placeCards(mainInGameCard);
     cards = Array.from(document.getElementsByClassName("card"))
+    pickCards()
 
 }
-function placeCards(auxVector){
+
+function placeCards(auxVector) {
     auxVector = selectCard(auxVector);
     auxVector.sort(comparator) //randomifica
-    for( let i = 0; i < auxVector.length; i++) {
+    for (let i = 0; i < auxVector.length; i++) {
         mainGenerator.innerHTML += auxVector[i];
     }
 }
 
-function comparator() { 
-	return Math.random() - 0.5; 
+function comparator() {
+    return Math.random() - 0.5;
 }
 
 function getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) ) + min;
+    return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-function selectCard(auxVector){
+function selectCard(auxVector) {
     let newArray = [];
     let indexCards = 0;
 
-    for(let i=0; i<numCards;){
+    for (let i = 0; i < numCards;) {
         indexCards = (getRndInteger(0, (auxVector.length - 2) / 2) * 2);
-        newArray[i++] = auxVector[indexCards]; 
-        newArray[i++] = auxVector[indexCards + 1]; 
+        newArray[i++] = auxVector[indexCards];
+        newArray[i++] = auxVector[indexCards + 1];
         auxVector.splice(indexCards, 2);
     }
     return newArray;
 }
 
+function pickCards() {
+    cards.forEach((card) => {
+        card.addEventListener('click', () => {
+            if (!(card.classList.contains('lock'))) {
+                card.classList.toggle('visible_face')
 
+                if (isTurned === null) {
+                    isTurned = card;
+                    isTurned.classList.add('lock')
+                } else if (isTurned !== card) {
+                    checkCards(card);
 
+                }
+            }
+        })
+    })
+}
+
+function cardType(card) {
+    return card.children[1].children[0].src; // retorna src do tipo da carta
+}
+
+function checkCards(card) {
+    if (cardType(card) === cardType(isTurned)) {
+        matchedCards.push(card.classList.add('lock', 'matched'));
+        matchedCards.push(isTurned.classList.add('lock', 'matched'));
+        isTurned = null;
+    } else {
+        blockAllCards(true);
+        setTimeout(() => {
+            card.classList.remove('visible_face');
+            isTurned.classList.remove('visible_face');
+            isTurned = null;
+            blockAllCards(false);
+        }, 1000);
+    }
+}
+
+function blockAllCards(bool) {
+    if (bool) {
+        cards.forEach((card) => {
+            card.classList.add('lock');
+        })
+    } else {
+        cards.forEach((card) => {
+            if (!(card.classList.contains('matched'))) {
+                card.classList.remove('lock');
+            }
+        })
+    }
+}

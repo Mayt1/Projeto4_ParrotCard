@@ -4,23 +4,24 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+
 /* Titulo */
-header h1{
-    margin-top:  40px;
+
+header h1 {
+    margin-top: 40px;
     margin-bottom: 13px;
     color: #75B79E;
     text-align: center;
     font-size: 56px;
     font-weight: 700;
-    
 }
 
-.Play{
+.Play {
     display: flex;
     justify-content: space-around;
-    
 }
-.Play button{
+
+.Play button {
     width: 100px;
     height: 30px;
     align-items: center;
@@ -31,35 +32,41 @@ header h1{
     border-radius: 10px;
 }
 
-.Play button:hover{
+.Play button:hover {
     background-color: #A7E9AF;
 }
 
+
 /* Local das cartas */
+
 main {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
 }
 
+
 /* Estilo das cartas */
+
 .card {
     width: 117px;
     height: 146px;
     position: relative;
     margin: 34px;
-  }
-.card * img{
+}
+
+.card * img {
     width: 100px;
     height: 100px;
 }
-  .face {
+
+.face {
     width: 117px;
     height: 146px;
     background-color: #A7E9AF;
     border-radius: 10px;
     border: 1px solid #99CEA8;
-    box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -67,32 +74,28 @@ main {
     backface-visibility: hidden;
     transition: all .5s;
     transform-style: preserve-3d;
-  }
+}
 
-  .back-face {
+.back-face {
     transform: rotateY(180deg);
-  }
+}
 
-  .card:hover .back-face {
+.card.visible_face .back-face {
     transform: rotateY(0deg);
-  }
+}
 
-  .card:hover .front-face {
+.card.visible_face .front-face {
     transform: rotateY(-180deg);
-  }
-
-
-
-
+}
 
 
 /*responsivo*/
+
 @media screen and (max-width: 768px) {
-    main{
+    main {
         display: flex;
         flex-wrap: wrap;
-        justify-content:center;
+        justify-content: center;
         align-content: center;
     }
-
 }
