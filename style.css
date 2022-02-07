@@ -1,0 +1,74 @@
+body {
+    box-sizing: border-box;
+    background-color: #EEF9BF;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Titulo */
+header h1{
+    margin-top:  40px;
+    margin-bottom: 13px;
+    color: #75B79E;
+    text-align: center;
+    font-size: 56px;
+    font-weight: 700;
+    
+}
+
+/* Local das cartas */
+main {
+    display: flex;
+    justify-content: center;
+}
+
+/* Estilo das cartas */
+.card {
+    width: 117px;
+    height: 146px;
+    position: relative;
+    margin: 34px;
+  }
+
+  .face {
+    width: 117px;
+    height: 146px;
+    background-color: #A7E9AF;
+    border-radius: 10px;
+    border: 1px solid #99CEA8;
+    box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    backface-visibility: hidden;
+    transition: all .5s;
+    transform-style: preserve-3d;
+  }
+
+  .back-face {
+    transform: rotateY(180deg);
+  }
+
+  .card:hover .back-face {
+    transform: rotateY(0deg);
+  }
+
+  .card:hover .front-face {
+    transform: rotateY(-180deg);
+  }
+
+
+
+
+
+
+/*responsivo*/
+@media screen and (max-width: 768px) {
+    main{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content:center;
+        align-content: center;
+    }
+
+}
