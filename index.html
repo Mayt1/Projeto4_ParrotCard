@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="favicon" rel="icon" type="image/x-icon">
+
+    <link rel="stylesheet" href="reset.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+      .card {
+        width: 200px;
+        height: 250px;
+        position: relative;
+      }
+
+      .face {
+        width: 100%;
+        height: 100%;
+        background-color: #A7E9AF;
+        border-radius: 10px;
+        box-shadow: 1px 1px 1px rgba(0,0,0,.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        backface-visibility: hidden;
+        transition: all .5s;
+        transform-style: preserve-3d;
+      }
+
+      .back-face {
+        transform: rotateY(180deg);
+      }
+
+      .card:hover .back-face {
+        transform: rotateY(0deg);
+      }
+
+      .card:hover .front-face {
+        transform: rotateY(-180deg);
+      }
+    </style>
+    
+  </head>
+  <body>
+    
+    <div class="card">
+      <div class="front-face face">
+        Frente
+      </div>
+      <div class="back-face face">
+        Verso
+      </div>
+    </div>
+
+  </body>
+</html>
