@@ -15,10 +15,31 @@ header h1{
     
 }
 
+.Play{
+    display: flex;
+    justify-content: space-around;
+    
+}
+.Play button{
+    width: 100px;
+    height: 30px;
+    align-items: center;
+    justify-items: center;
+    background-color: #75B79E;
+    border: 1px;
+    border-color: #99CEA8;
+    border-radius: 10px;
+}
+
+.Play button:hover{
+    background-color: #A7E9AF;
+}
+
 /* Local das cartas */
 main {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 /* Estilo das cartas */
@@ -28,7 +49,10 @@ main {
     position: relative;
     margin: 34px;
   }
-
+.card * img{
+    width: 100px;
+    height: 100px;
+}
   .face {
     width: 117px;
     height: 146px;
