@@ -1,9 +1,4 @@
-/*minhaArray.sort(comparador); // Após esta linha, a minhaArray estará embaralhada
-
-// Esta função pode ficar separada do código acima, onde você preferir
-function comparador() {
-    return Math.random() - 0.5;
-}*/
+//variaveis globais 
 let isTurned = null;
 let matchedCards = [];
 let cards = null;
@@ -16,12 +11,16 @@ const cardImages = [
     "assets/bulbasaur.gif",
     "assets/rocket.gif"
 ]
-const cardFront = ["assets/front.png"]
+const cardFront = ["assets/pokeball.gif"]
 let numCards = 0;
 let mainGenerator = document.querySelector("main");
 let flips = 0;
 const gameSetup = document.querySelector("section");
+let timer_on = 0;
+let time = 0;
 
+
+//funçao de Inicio do game (main.exe)
 function startGame() {
     let mainInGameCard = [];
     //pergunta o numero de cartas do jogo e verifica é autorizado
@@ -31,6 +30,7 @@ function startGame() {
 
     mainGenerator.innerHTML = "";
     gameSetup.children[0].innerText = `Viradas: 0`;
+    gameSetup.children[2].innerText = `Tempo: 0 Segundos`;
 
     //coloca em cada posiçao do vetor, a div correspondente a cada carta
     for (let i = 0; i < cardImages.length; i++) {
@@ -55,13 +55,13 @@ function startGame() {
             </div>
         `)
     }
-    //é colocado as cartas
     placeCards(mainInGameCard)
     cards = Array.from(document.getElementsByClassName("card"))
     pickCards()
-
+    startClock()
 }
 
+//--funçoes de inicializaçao das cartas do jogo
 function placeCards(auxVector) {
     auxVector = selectCard(auxVector);
     auxVector.sort(comparator) //randomifica
@@ -91,6 +91,7 @@ function selectCard(auxVector) {
     return newArray;
 }
 
+//--Funçoes de logica das cartas
 function pickCards() {
     cards.forEach((card) => {
         card.addEventListener('click', () => {
@@ -144,16 +145,36 @@ function blockAllCards(bool) {
     }
 }
 
+//--Funçoes de tempo e contadores de jogadas
 function addFlipCounter() {
     gameSetup.children[0].innerText = `Viradas: ${++flips}`
 }
 
+function addTimeCounter() {
+    gameSetup.children[2].innerText = `Tempo: ${time++} Segundos`
+    timeout = setTimeout(addTimeCounter, 1000);
+}
+
+function startClock() {
+    if (!timer_on) {
+        timer_on = 1;
+        addTimeCounter();
+    }
+}
+
+function stopCount() {
+    clearTimeout(timeout);
+    timer_on = 0;
+}
+
+//--Funçoes de fim de jogo e reset para iniciar um novo jogo
 function victoryMessage() {
     if (matchedCards.length === cards.length) {
+        stopCount()
         setTimeout(() => {
             alert(`
                 Voce ganhou em ${flips} Jogadas!
-                Seu tempo: X Segundos.
+                Seu tempo: ${--time} Segundos.
             `);
             resetGame();
         }, 500);
@@ -165,9 +186,11 @@ function resetGame() {
     numCards = null;
     matchedCards = [];
     flips = 0;
+    time = 0;
 
     if (prompt('Digite: Sim; para jogar novamente') === 'Sim') {
         gameSetup.children[0].innerText = `Viradas: 0`;
+        gameSetup.children[2].innerText = `Tempo: 0 Segundos`;
         startGame();
     }
 }
