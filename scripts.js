@@ -18,8 +18,9 @@ const cardImages = [
 ]
 const cardFront = ["assets/front.png"]
 let numCards = 0;
-let mainGenerator = document.querySelector("main")
-
+let mainGenerator = document.querySelector("main");
+let flips = 0;
+const gameSetup = document.querySelector("section");
 
 function startGame() {
     let mainInGameCard = [];
@@ -27,7 +28,10 @@ function startGame() {
     while (numCards < 4 || (numCards % 2) != 0 || numCards > 14) {
         numCards = parseInt(prompt("Digite o numero de cartas. Sendo este numero par e entre 4 e 14"))
     }
+
     mainGenerator.innerHTML = "";
+    gameSetup.children[0].innerText = `Viradas: 0`;
+
     //coloca em cada posiçao do vetor, a div correspondente a cada carta
     for (let i = 0; i < cardImages.length; i++) {
         mainInGameCard.push(`
@@ -52,7 +56,7 @@ function startGame() {
         `)
     }
     //é colocado as cartas
-    placeCards(mainInGameCard);
+    placeCards(mainInGameCard)
     cards = Array.from(document.getElementsByClassName("card"))
     pickCards()
 
@@ -91,6 +95,7 @@ function pickCards() {
     cards.forEach((card) => {
         card.addEventListener('click', () => {
             if (!(card.classList.contains('lock'))) {
+                addFlipCounter()
                 card.classList.toggle('visible_face')
 
                 if (isTurned === null) {
@@ -98,7 +103,7 @@ function pickCards() {
                     isTurned.classList.add('lock')
                 } else if (isTurned !== card) {
                     checkCards(card);
-
+                    victoryMessage();
                 }
             }
         })
@@ -136,5 +141,33 @@ function blockAllCards(bool) {
                 card.classList.remove('lock');
             }
         })
+    }
+}
+
+function addFlipCounter() {
+    gameSetup.children[0].innerText = `Viradas: ${++flips}`
+}
+
+function victoryMessage() {
+    if (matchedCards.length === cards.length) {
+        setTimeout(() => {
+            alert(`
+                Voce ganhou em ${flips} Jogadas!
+                Seu tempo: X Segundos.
+            `);
+            resetGame();
+        }, 500);
+    }
+}
+
+function resetGame() {
+    isTurned = null;
+    numCards = null;
+    matchedCards = [];
+    flips = 0;
+
+    if (prompt('Digite: Sim; para jogar novamente') === 'Sim') {
+        gameSetup.children[0].innerText = `Viradas: 0`;
+        startGame();
     }
 }
